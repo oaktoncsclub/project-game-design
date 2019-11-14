@@ -1,0 +1,17 @@
+
+
+h1 {
+	color: brown;
+	text-align: center;
+}
+
+
+#board {
+
+	padding: 5px;
+	background-color: #dbfaf6;
+	height:400px; /* or whatever width you want. */
+	max-height:1000px; /* or whatever width you want. */
+	display: inline-block;
+
+}
