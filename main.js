@@ -1,5 +1,6 @@
 
 
+//CARSON
 //Adds a board of the specified with and height to the canvas
 //This function replaces any old board that already exists on the DOM
 //The elements added to the DOM must contain listeners that apply animations 
@@ -16,7 +17,7 @@ function constructBoard(width, height) {//boardObj (int int)
 }
 
 
-
+//PARI
 //Writes the new segment to the board object and checks for new points / the end of the game
 function onLineClicked(x, y, isTop) {// (int int boolean)
 
@@ -26,6 +27,7 @@ function onLineClicked(x, y, isTop) {// (int int boolean)
 
 
 
+//MUSTAFA
 //Called when the game ends
 //Displays who won and the scores for each size
 function onGameEnd(winnerName) {// (string)
@@ -34,12 +36,13 @@ function onGameEnd(winnerName) {// (string)
 
 }
 
+//Gili and Katherine and Rishi 
 //Displays information and rules about how the game works
 function showRules() {// ()
 
 }
 
-
+//TED & VINCENT
 //Opens a dialog that allows the user to enter some text
 //Returns what the user typed in
 function getText(prompt) {//string (string)
