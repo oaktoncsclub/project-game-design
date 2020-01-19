@@ -6,8 +6,19 @@
 //The elements added to the DOM must contain listeners that apply animations 
 //to the lines when hoovered and call onLineClicked with the correct line coordinate when that element is clicked
 function constructBoard(width, height) {//boardObj (int int)
-	//real code
-	//...
+	// okay, DOM time!
+	const board = document.getElementById('board');
+	for(let row = 0; row < height; row++) {
+		const tr = board.appendChild(document.createElement('tr'));
+		for(let col = 0; col < width; col++) {
+			const cell = tr.appendChild(document.createElement('td'));
+			cell.classList.add('square', 'parity-' + ((row * height + col) % 2 === 0));
+			const horzLine = cell.appendChild(document.createElement('div'));
+			horzLine.classList.add('horz-line', 'line', 'line-horz-' + row + '-' + col);
+			const vertLine = cell.appendChild(document.createElement('div'));
+			vertLine.classList.add('vertLine-line', 'line', 'line-vert-' + row + '-' + col);
+		}
+	}
 	return {
 		vertical: {},//Each element is a boolean that indicates weather or not a line is present
 		horizontal: {},//Return real values eventually
@@ -50,15 +61,13 @@ function getText(prompt) {//string (string)
 }
 
 
+window.onload = () => {
+	// this runs when the DOM is loaded
+	const board = constructBoard(5, 5);
 
-var board = constructBoard(5, 5);
-
-showRules();
-
-
-var player1Name = getText("Enter player1's name");
-var player2Name = getText("Enter player2's name");
+	showRules();
 
 
-
-
+	const player1Name = getText("Enter player1's name");
+	const player2Name = getText("Enter player2's name");
+};
