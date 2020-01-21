@@ -8,20 +8,24 @@
 function constructBoard(width, height) {//boardObj (int int)
 	// okay, DOM time!
 	const board = document.getElementById('board');
-	for(let row = 0; row < height; row++) {
+	var row, col;
+	for(row = 0; row < height; row++) {
 		const tr = board.appendChild(document.createElement('tr'));
-		for(let col = 0; col < width; col++) {
+		for(col = 0; col < width; col++) {
 			const cell = tr.appendChild(document.createElement('td'));
+			cell.id = 'square-' + row + '-' + col;
 			cell.classList.add('square', 'parity-' + ((row * height + col) % 2 === 0));
+
 			const horzLine = cell.appendChild(document.createElement('div'));
 			horzLine.classList.add('horz-line', 'line', 'line-horz-' + row + '-' + col);
-			horzLine.onclick = function(){
-				onLineClicked(col, row, false)
+			horzLine.onclick = function() {
+				onLineClicked(col, row, false);
 			};
+
 			const vertLine = cell.appendChild(document.createElement('div'));
 			vertLine.classList.add('vert-line', 'line', 'line-vert-' + row + '-' + col);
-			vertLine.onclick = function(){
-				onLineClicked(col, row, true)
+			vertLine.onclick = function() {
+				onLineClicked(col, row, true);
 			};
 		}
 	}

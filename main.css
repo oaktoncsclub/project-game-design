@@ -8,8 +8,8 @@ h1 {
 #board {
 	padding: 5px;
 	background-color: #dbfaf6;
-	height:400px; /* or whatever width you want. */
-	max-height:1000px; /* or whatever width you want. */
+	height:400px;
+	max-height:1000px;
 }
 
 td.square {
