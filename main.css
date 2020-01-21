@@ -29,25 +29,25 @@ td.square.parity-false {
 div.horz-line {
 	position: absolute;
 	top: 0;
+	left: 0;
 	right: 0;
 	height: 10px;
-	width: 200px;
+	width: 100%;
 	background-color: black;
 	grid-area: header;
 	animation: size 1s;
 }
 div.horz-line:hover {
 	height: 15px;
-
 }
 
 div.vert-line {
-	/*position: absolute;*/
-	/*top: 10px;*/
-	/*right: 50px;*/
-	height: 200px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100px;
 	width: 10px;
-	background-color: black;
+	background-color: yellow;
 	grid-area: header;
 	animation: size 1s;
 }
@@ -55,12 +55,9 @@ div.vert-line:hover {
 	width: 15px;
 }
 
-
-
-
-
-
-
+.clicked {
+	border: solid black 1px;
+}
 
 
 

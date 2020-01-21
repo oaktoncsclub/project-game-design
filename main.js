@@ -15,23 +15,43 @@ function constructBoard(width, height) {//boardObj (int int)
 			cell.classList.add('square', 'parity-' + ((row * height + col) % 2 === 0));
 			const horzLine = cell.appendChild(document.createElement('div'));
 			horzLine.classList.add('horz-line', 'line', 'line-horz-' + row + '-' + col);
+			horzLine.onclick = function(){
+				onLineClicked(col, row, false)
+			};
 			const vertLine = cell.appendChild(document.createElement('div'));
-			vertLine.classList.add('vertLine-line', 'line', 'line-vert-' + row + '-' + col);
+			vertLine.classList.add('vert-line', 'line', 'line-vert-' + row + '-' + col);
+			vertLine.onclick = function(){
+				onLineClicked(col, row, true)
+			};
 		}
 	}
-	return {
-		vertical: {},//Each element is a boolean that indicates weather or not a line is present
-		horizontal: {},//Return real values eventually
-	}
+	// return {
+	// 	vertical: {},//Each element is a boolean that indicates weather or not a line is present
+	// 	horizontal: {},//Return real values eventually
+	// }
 	//addActionListener(... onLineClicked);
 	//...
 }
 
+function getElement(row, col, isTop) {
+	return 	document.getElementsByClassName("line-" + (isTop?"vert":"horz") + "-" + row + "-" + col)[0];
+}
+
+function isClicked(row, col, isTop) {
+	// returns the boolean "is clicked"
+	return getElement(row,col,isTop).classList.contains("clicked")
+}
+function markAsClicked(row, col, isTop) {
+	return getElement(row,col,isTop).classList.add("clicked")
+}
+
+
 
 //PARI
 //Writes the new segment to the board object and checks for new points / the end of the game
-function onLineClicked(x, y, isTop) {// (int int boolean)
-
+function onLineClicked(row,col, isTop) {// (int int boolean)
+	console.log("" + row + "," + col + " was clicked");
+	markAsClicked(row, col, isTop)
 	//if (gameover...)
 	//	onGameEnd(...)
 }
