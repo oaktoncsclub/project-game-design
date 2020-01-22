@@ -8,10 +8,10 @@
 function constructBoard(width, height) {//boardObj (int int)
 
 	const board = document.getElementById('board');
-	for (var row = 0; row < height; row++) {
+	for (let row = 0; row < height; row++) {
 		const localRow = row;
 		const tr = board.appendChild(document.createElement('tr'));
-		for (var col = 0; col < width; col++) {
+		for (let col = 0; col < width; col++) {
 			const localCol = col;
 			const cell = tr.appendChild(document.createElement('td'));
 			cell.id = 'square-' + row + '-' + col;

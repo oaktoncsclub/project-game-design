@@ -45,7 +45,7 @@ div.vert-line {
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 100px;
+	height: 100%;
 	width: 10px;
 	background-color: yellow;
 	grid-area: header;
