@@ -89,4 +89,66 @@ window.onload = () => {
 
 	const player1Name = getText("Enter player1's name");
 	const player2Name = getText("Enter player2's name");
+
+
+	//Rules stuff
+	var rulesModal = document.getElementById("rules-modal");
+	var rulesButton = document.getElementById("rules-button");
+	var rulesSpan = document.getElementsByClassName("close-rules-modal")[0];
+
+	var nextButton1 = document.getElementById("next");
+	var rule2Modal = document.getElementById("rule2-modal");
+	var rule2Span = document.getElementsByClassName("close-rule2-modal")[0];
+
+	var nextButton2 = document.getElementById("next2id");
+	var rule3Modal = document.getElementById("rule3-modal");
+	var rule3Span = document.getElementsByClassName("close-rule3-modal")[0];
+
+	var nextButton3 = document.getElementById("next3id");
+	var rule4Modal = document.getElementById("rule4-modal");
+	var rule4Span = document.getElementsByClassName("close-rule4-modal")[0];
+	var nextButton4 = document.getElementById("next4id");
+
+	rulesButton.onclick = function(){
+		rulesModal.style.display = "block";
+	}
+
+	rulesSpan.onclick = function() {
+		rulesModal.style.display = "none";
+	}
+
+	nextButton1.onclick = function() {
+		rulesModal.style.display = "none";
+		rule2Modal.style.display = "block";
+	}
+
+	rule2Span.onclick = function() {
+		rule2Modal.style.display = "none";
+	}
+
+	nextButton2.onclick = function() {
+		rule2Modal.style.display = "none";
+		rule3Modal.style.display = "block";
+	}
+
+	rule3Span.onclick = function() {
+		rule3Modal.style.display = "none";
+	}
+
+	nextButton3.onclick = function() {
+		rule3Modal.style.display = "none";
+		rule4Modal.style.display = "block";
+	}
+
+	nextButton4.onclick = function(){
+		rule4Modal.style.display = "none";
+	}
+
+	rule4Span.onclick = function() {
+		rule4Modal.style.display = "none";
+	}
+
 };
+
+
+
