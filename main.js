@@ -6,21 +6,51 @@
 //The elements added to the DOM must contain listeners that apply animations 
 //to the lines when hoovered and call onLineClicked with the correct line coordinate when that element is clicked
 function constructBoard(width, height) {//boardObj (int int)
-	//real code
-	//...
-	return {
-		vertical: {},//Each element is a boolean that indicates weather or not a line is present
-		horizontal: {},//Return real values eventually
+
+	const board = document.getElementById('board');
+	for (let row = 0; row < height; row++) {
+		const localRow = row;
+		const tr = board.appendChild(document.createElement('tr'));
+		for (let col = 0; col < width; col++) {
+			const localCol = col;
+			const cell = tr.appendChild(document.createElement('td'));
+			cell.id = 'square-' + row + '-' + col;
+			cell.classList.add('square', 'parity-' + ((row * height + col) % 2 === 0));
+
+			const horzLine = cell.appendChild(document.createElement('div'));
+			horzLine.classList.add('horz-line', 'line', 'line-horz-' + row + '-' + col);
+			horzLine.onclick = function() {
+				onLineClicked(localCol, localRow, false);
+			};
+
+			const vertLine = cell.appendChild(document.createElement('div'));
+			vertLine.classList.add('vert-line', 'line', 'line-vert-' + row + '-' + col);
+			vertLine.onclick = function() {
+				onLineClicked(localCol, localRow, true);
+			};
+		}
 	}
-	//addActionListener(... onLineClicked);
-	//...
 }
+
+function getElement(row, col, isVert) {
+	return document.getElementsByClassName("line-" + (isVert ? "vert" : "horz") + "-" + row + "-" + col)[0];
+}
+
+function isClicked(row, col, isVert) {
+	// returns the boolean "is clicked"
+	return getElement(row, col, isVert).classList.contains("clicked");
+}
+function markAsClicked(row, col, isVert) {
+	return getElement(row, col, isVert).classList.add("clicked");
+}
+
 
 
 //PARI
 //Writes the new segment to the board object and checks for new points / the end of the game
-function onLineClicked(x, y, isTop) {// (int int boolean)
-
+function onLineClicked(row, col, isVert) {// (int int boolean)
+	console.log("" + row + "," + col + "(" + (isVert ? "v" : "h") + ") was clicked");
+	markAsClicked(row, col, isVert);
 	//if (gameover...)
 	//	onGameEnd(...)
 }
@@ -50,15 +80,13 @@ function getText(prompt) {//string (string)
 }
 
 
+window.onload = () => {
+	// this runs when the DOM is loaded
+	const board = constructBoard(5, 5);
 
-var board = constructBoard(5, 5);
-
-showRules();
-
-
-var player1Name = getText("Enter player1's name");
-var player2Name = getText("Enter player2's name");
+	showRules();
 
 
-
-
+	const player1Name = getText("Enter player1's name");
+	const player2Name = getText("Enter player2's name");
+};
