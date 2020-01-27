@@ -8,6 +8,7 @@
 
 		<!-- Local Files -->
 		<link rel="stylesheet" type="text/css" href="main.css">
+		<link rel="stylesheet" type="text/css" href="rules.css">
 		<link rel="icon" href="icon.png">
 
 		<!-- Dependencies -->
@@ -24,10 +25,96 @@
 		<div class="container-fluid padding" id="board">
 			<p>Board<p>
 		</div>
+
+		<button id="rules-button" class="rules-button-class">Rules</button>
+
+		<div id="rules-modal" class="rules-modal-class">
+			<div class="rules-modal-content">
+				<span class="close-rules-modal">&times;</span>
+				<div id="rulesheader" class="rulesheaderclass">
+					<h2>1. How to Make Your Move</h2>
+				</div>
+
+				<div id="firstp" class="firstpclass">
+					<p>The lines each player make must be one unit long, and connect two adjacent dots:</p>
+				</div>
+
+				<div id="firstimage" class="firstimageclass">				
+					<img class="rulesimg1" src="https://camo.githubusercontent.com/bbbc6595c35d6644dd180584dcfdd3faf3149c36/68747470733a2f2f692e696d6775722e636f6d2f3567376a4e54722e706e67" height="100" width="100">
+				</div>
+
+				<div id="nextbutton1" class="next1div">
+				<button id="next" class="next1">next</button>
+				</div>
+			</div>
+		</div>
+		<div id="rule2-modal" class="rule2-modal-class">	
+			<div class="rule2-modal-content">
+				<span class="close-rule2-modal">&times;</span>
+				<div id="rule2header" class="rule2headerclass">
+					<h2>2. Prohibited Moves</h2>
+				</div>
+
+				<div id="secondp" class="secondpclass">
+					<p>The following move is NOT allowed:</p>
+				</div>
+
+				<div id="secondimage" class="secondimageclass">				
+					<img class="rulesimg2" src="https://camo.githubusercontent.com/90fdc07dd1b3d181800d9c92350464c97911896d/68747470733a2f2f692e696d6775722e636f6d2f525055307847342e706e67" height="100" width="100">
+				</div>
+
+				<div id="nextbutton2" class="next2div">
+					<button id="next2id" class="next2">next</button>
+				</div>
+			</div>
+			
+		</div>
+
+		<div id="rule3-modal" class="rule3-modal-class">	
+			<div class="rule3-modal-content">
+				<span class="close-rule3-modal">&times;</span>
+				<div id="rule3header" class="rule3headerclass">
+					<h2>Prohibited Move #2</h2>
+				</div>
+
+				<div id="thirdp" class="thirdpclass">
+					<p>The following move is NOT allowed:</p>
+				</div>
+				
+				<div id="thirdimage" class="thirdimageclass">				
+					<img class="rulesimg3" src="https://camo.githubusercontent.com/e5da2e1b2974c2f4b3c5e145368529a503ab97a7/68747470733a2f2f692e696d6775722e636f6d2f494f41783461592e706e67" height="100" width="100">
+				</div>
+
+				<div id="nextbutton3" class="next3div">
+					<button id="next3id" class="next3">next</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="rule4-modal" class="rule4-modal-class">	
+			<div class="rule4-modal-content">
+				<span class="close-rule4-modal">&times;</span>
+				<div id="rule4header" class="rule4headerclass">
+					<h2>Prohibited Move #3</h2>
+				</div>
+				<div id="fourthp" class="fourthpclass">
+					<p>The following move is NOT allowed:</p>
+				</div>
+					
+				<div id="fourthimage" class="fourthimageclass">				
+					<img class="rulesimg4" src="https://camo.githubusercontent.com/d56d6d0a0e21d604e7f0aa338b5c948e0d2182fd/68747470733a2f2f692e696d6775722e636f6d2f49654e5578734c2e706e67" height="100" width="100">
+				</div>
+
+				<div id="nextbutton4" class="next4div">
+					<button id="next4id" class="next4">done</button>
+				</div>
+			</div>
+		</div>
+
 	</body>
 	<footer>
 		<div class="container-fluid padding">
-					<hr class="light">
+			<hr class="light">
 			<div class="row text-center">
 				<div class="col-md-6">
 					<p>Designer:</p>
