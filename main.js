@@ -1,24 +1,40 @@
 
 
+//The number of players playing the game
 var playerCount = 10;
+
+//Whose turn it is [0, playerCount)
 var currentTurn = 0;
+
+//The score for each player ID
+var playerScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+//The total number of cells filled in
+var totalClaimed = 0;
+
+//The size of the board
+var boardRows = -1, boardCols = -1;
 
 //CARSON
 //Adds a board of the specified with and height to the canvas
 //This function replaces any old board that already exists on the DOM
 //The elements added to the DOM must contain listeners that apply animations 
 //to the lines when hoovered and call onLineClicked with the correct line coordinate when that element is clicked
-function constructBoard(width, height) {//boardObj (int int)
+function constructBoard(rowCount, colCount) {//boardObj (int int)
+	boardRows = colCount;
+	boardCols = rowCount;
 
 	const board = document.getElementById('board');
-	for (let row = 0; row < height; row++) {
+	board.innerHTML = "";//Delete any old cells
+
+	for (let row = 0; row < rowCount; row++) {
 		const localRow = row;
 		const tr = board.appendChild(document.createElement('tr'));
-		for (let col = 0; col < width; col++) {
+		for (let col = 0; col < colCount; col++) {
 			const localCol = col;
 			const cell = tr.appendChild(document.createElement('td'));
 			cell.id = 'square-' + row + '-' + col;
-			cell.classList.add('square', 'parity-' + ((row * height + col) % 2 === 0));
+			cell.classList.add('square', 'parity-' + ((row * colCount + col) % 2 === 0));
 
 			const horzLine = cell.appendChild(document.createElement('div'));
 			horzLine.classList.add('horz-line', 'line', 'line-horz-' + row + '-' + col);
@@ -59,12 +75,48 @@ function markAsClicked(row, col, isVert, playerID) {
 function onLineClicked(row, col, isVert) {// (int int boolean)
 	console.log("" + row + "," + col + "(" + (isVert ? "v" : "h") + ") was clicked");
 	markAsClicked(row, col, isVert, currentTurn);
+
+	//used to keep track of already visited nodes during traversal
+	var visited = [];
+	for (var i = 0; i < boardRows; i++) {
+		visited[i] = [];
+		for (var j = 0; j < boardCols; j++) {
+			visited[i][j] = false;
+		}
+	}
+	//Travsers all connected paths starting from the clicked node and compue the new amount of squares that are claimed
+	//Then the player's score is incremented by the change in captured squares
+	var newClaimedCount = 0;
+
+	//Use recursion or a stack to traverse here
+
+
+
+
+	//Update the score
+	var scoreChange = newClaimedCount - totalClaimed;
+	playerScores[currentTurn] += scoreChange;	
+	totalClaimed = newClaimedCount;
+
+	//All squares are claimed
+	if (totalClaimed == boardRows * boardCols) {
+		//Find who has the highest score
+		//Only use board sizes that result in an odd number of squares so ties are not possible
+		//Add tie checking later
+		var winnerID = 0;
+		for (var i = 1; i < playerCount; i++) {
+			if (playerScores[i] > playerScores[winnerID]) {
+				winnerID = i;
+			}
+		}
+		onGameEnd(winnerID);
+	}
+
+	//Move on to the next turn
 	if (currentTurn == playerCount)
 		currentTurn = 0;
 	currentTurn++;
 
-	//if (gameover...)
-	//	onGameEnd(...)
 }
 
 
@@ -72,17 +124,12 @@ function onLineClicked(row, col, isVert) {// (int int boolean)
 //MUSTAFA
 //Called when the game ends
 //Displays who won and the scores for each size
-function onGameEnd(winnerName) {// (string)
+function onGameEnd(winnerID) {// (string)
 
 
 
 }
 
-//Gili and Katherine and Rishi 
-//Displays information and rules about how the game works
-function showRules() {// ()
-
-}
 
 //TED & VINCENT
 //Opens a dialog that allows the user to enter some text
@@ -94,13 +141,7 @@ function getText(prompt) {//string (string)
 
 window.onload = () => {
 	// this runs when the DOM is loaded
-	const board = constructBoard(5, 5);
-
-	showRules();
-
-
-	const player1Name = getText("Enter player1's name");
-	const player2Name = getText("Enter player2's name");
+	const board = constructBoard(10, 5);
 
 
 	//Rules stuff
@@ -124,6 +165,7 @@ window.onload = () => {
 	rulesButton.onclick = function() {
 		rulesModal.style.display = "block";
 	}
+	rulesModal.style.display = "block";
 
 	rulesSpan.onclick = function() {
 		rulesModal.style.display = "none";
