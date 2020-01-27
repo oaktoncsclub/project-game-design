@@ -1,5 +1,8 @@
 
 
+var playerCount = 10;
+var currentTurn = 0;
+
 //CARSON
 //Adds a board of the specified with and height to the canvas
 //This function replaces any old board that already exists on the DOM
@@ -20,13 +23,13 @@ function constructBoard(width, height) {//boardObj (int int)
 			const horzLine = cell.appendChild(document.createElement('div'));
 			horzLine.classList.add('horz-line', 'line', 'line-horz-' + row + '-' + col);
 			horzLine.onclick = function() {
-				onLineClicked(localCol, localRow, false);
+				onLineClicked(localRow, localCol, false);
 			};
 
 			const vertLine = cell.appendChild(document.createElement('div'));
 			vertLine.classList.add('vert-line', 'line', 'line-vert-' + row + '-' + col);
 			vertLine.onclick = function() {
-				onLineClicked(localCol, localRow, true);
+				onLineClicked(localRow, localCol, true);
 			};
 		}
 	}
@@ -38,10 +41,15 @@ function getElement(row, col, isVert) {
 
 function isClicked(row, col, isVert) {
 	// returns the boolean "is clicked"
-	return getElement(row, col, isVert).classList.contains("clicked");
+	for (var i = 0; i < 10; i++) {
+		if (getElement(row, col, isVert).classList.contains("clicked" + i))
+			return true;
+	}
+	return false;
 }
-function markAsClicked(row, col, isVert) {
-	return getElement(row, col, isVert).classList.add("clicked");
+
+function markAsClicked(row, col, isVert, playerID) {
+	return getElement(row, col, isVert).classList.add("clicked" + playerID);
 }
 
 
@@ -50,7 +58,11 @@ function markAsClicked(row, col, isVert) {
 //Writes the new segment to the board object and checks for new points / the end of the game
 function onLineClicked(row, col, isVert) {// (int int boolean)
 	console.log("" + row + "," + col + "(" + (isVert ? "v" : "h") + ") was clicked");
-	markAsClicked(row, col, isVert);
+	markAsClicked(row, col, isVert, currentTurn);
+	if (currentTurn == playerCount)
+		currentTurn = 0;
+	currentTurn++;
+
 	//if (gameover...)
 	//	onGameEnd(...)
 }
@@ -109,7 +121,7 @@ window.onload = () => {
 	var rule4Span = document.getElementsByClassName("close-rule4-modal")[0];
 	var nextButton4 = document.getElementById("next4id");
 
-	rulesButton.onclick = function(){
+	rulesButton.onclick = function() {
 		rulesModal.style.display = "block";
 	}
 
@@ -140,7 +152,7 @@ window.onload = () => {
 		rule4Modal.style.display = "block";
 	}
 
-	nextButton4.onclick = function(){
+	nextButton4.onclick = function() {
 		rule4Modal.style.display = "none";
 	}
 

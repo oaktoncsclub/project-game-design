@@ -21,10 +21,10 @@ td.square {
 	position: relative;
 }
 td.square.parity-true {
-	background-color: red;
+	background-color: #DDDDDD;
 }
 td.square.parity-false {
-	background-color: blue;
+	background-color: #B0B0B0;
 }
 div.horz-line {
 	position: absolute;
@@ -47,7 +47,7 @@ div.vert-line {
 	left: 0;
 	height: 100%;
 	width: 10px;
-	background-color: yellow;
+	background-color: black;
 	grid-area: header;
 	animation: size 1s;
 }
@@ -55,11 +55,68 @@ div.vert-line:hover {
 	width: 15px;
 }
 
-.clicked {
-	border: solid black 1px;
+.clicked0 {
+	border: solid #f0ffff 10px;
+}
+.clicked1 {
+	border: solid #5d8aa8 10px;
+}
+.clicked2 {
+	border: solid #f0f8ff 10px;
+}
+.clicked3 {
+	border: solid #e32636 10px;
+}
+.clicked4 {
+	border: solid #ffbf00 10px;
+}
+.clicked5 {
+	border: solid #a4c639 10px;
+}
+.clicked6 {
+	border: solid #cd9575 10px;
+}
+.clicked7 {
+	border: solid #008000 10px;
+}
+.clicked8 {
+	border: solid #e9d66b 10px;
+}
+.clicked9 {
+	border: solid #ff2052 10px;
 }
 
 
+td.square.claimed0 {
+	background-color: #f0ffff;
+}
+td.square.claimed1 {
+	background-color: #5d8aa8;
+}
+td.square.claimed2 {
+	background-color: #f0f8ff;
+}
+td.square.claimed3 {
+	background-color: #e32636;
+}
+td.square.claimed4 {
+	background-color: #ffbf00;
+}
+td.square.claimed5 {
+	background-color: #a4c639;
+}
+td.square.claimed6 {
+	background-color: #cd9575;
+}
+td.square.claimed7 {
+	background-color: #008000;
+}
+td.square.claimed8 {
+	background-color: #e9d66b;
+}
+td.square.claimed9 {
+	background-color: #ff2052;
+}
 
 
 
