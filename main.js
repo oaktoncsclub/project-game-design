@@ -125,6 +125,29 @@ function onLineClicked(row, col, isVert) {// (int int boolean)
 //Called when the game ends
 //Displays who won and the scores for each size
 function onGameEnd(winnerID) {// (string)
+ var onGameEndModal = document.getElementById("onGameEndModal");
+ var onGameEndModalClose = document.getElementsByClassName("close-results-modal")[0];
+
+
+onGameEndModal.style.display= "block";
+document.getElementById("winner").innerHTML=winnerID;
+
+
+document.getElementById("p1").innerHTML=playerScores[0];
+document.getElementById("p2").innerHTML=playerScores[1];
+document.getElementById("p3").innerHTML=playerScores[2];
+document.getElementById("p4").innerHTML=playerScores[3];
+document.getElementById("p5").innerHTML=playerScores[4];
+document.getElementById("p6").innerHTML=playerScores[5];
+document.getElementById("p7").innerHTML=playerScores[6];
+document.getElementById("p8").innerHTML=playerScores[7];
+document.getElementById("p9").innerHTML=playerScores[8];
+document.getElementById("p10").innerHTML=playerScores[9];
+
+
+onGameEndModalClose.onclick= function(){
+	onGameEndModal.style.display= "none";
+}
 
 
 
@@ -140,11 +163,12 @@ function getText(prompt) {//string (string)
 
 
 window.onload = () => {
+
 	// this runs when the DOM is loaded
 	const board = constructBoard(10, 5);
 
-
 	//Rules stuff
+	
 	var rulesModal = document.getElementById("rules-modal");
 	var rulesButton = document.getElementById("rules-button");
 	var rulesSpan = document.getElementsByClassName("close-rules-modal")[0];
@@ -162,9 +186,11 @@ window.onload = () => {
 	var rule4Span = document.getElementsByClassName("close-rule4-modal")[0];
 	var nextButton4 = document.getElementById("next4id");
 
+
 	rulesButton.onclick = function() {
 		rulesModal.style.display = "block";
 	}
+
 	rulesModal.style.display = "block";
 
 	rulesSpan.onclick = function() {
@@ -203,6 +229,4 @@ window.onload = () => {
 	}
 
 };
-
-
 

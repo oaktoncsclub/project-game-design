@@ -1,0 +1,51 @@
+.onGameEndModal-class{
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rbg(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+	display:none;
+}
+
+.onGameEndModal-content{
+	font-family: "Verdana";
+	background-color: #000;
+	color: white;
+	margin: auto;
+	padding: 20px;
+	width: 80%;
+	border: 1px solid #888;
+}
+
+.results-content{
+	font-family: "Verdana";
+	background-color: #000;
+	color: white;
+	margin:auto;
+	padding: 20px;
+	width: 80%;
+
+}
+
+.close-results-modal{
+	color: white;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+.close-results-modal:hover,
+.close-results-modal:focus{
+	color: #888;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.winnerHeader-class{
+	text-align: center;
+	font-weight:bold;
+}
