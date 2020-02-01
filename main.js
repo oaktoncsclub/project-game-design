@@ -69,57 +69,58 @@ function markAsClicked(row, col, isVert, playerID) {
 }
 
 
+function countClaimedCells() {
+	var cells = [];
+	return cells
+}
+
+function isFilled(cell) {
+	for (var i = 0; i < playerCount; i++) {
+		if (cell.classList.contains("clicked" + i))
+			return true;
+	}
+	return false;
+}
+
+function markAsClaimed(cell) {
+	if (!isFilled(cell)) {
+		cell.classList.add("filled" + playerID)
+	}
+}
 
 //PARI
 //Writes the new segment to the board object and checks for new points / the end of the game
 function onLineClicked(row, col, isVert) {// (int int boolean)
-	console.log("" + row + "," + col + "(" + (isVert ? "v" : "h") + ") was clicked");
-	markAsClicked(row, col, isVert, currentTurn);
+	if (!isClicked(row, col, isVert)) {
+		console.log("" + row + "," + col + "(" + (isVert ? "v" : "h") + ") was clicked");
+		markAsClicked(row, col, isVert, currentTurn);
+		const newClaimedCount = countClaimedCells();
+		var scoreChange = newClaimedCount - totalClaimed;
+		playerScores[currentTurn] += scoreChange;	
+		totalClaimed = newClaimedCount;
 
-	//used to keep track of already visited nodes during traversal
-	var visited = [];
-	for (var i = 0; i < boardRows; i++) {
-		visited[i] = [];
-		for (var j = 0; j < boardCols; j++) {
-			visited[i][j] = false;
-		}
-	}
-	//Travsers all connected paths starting from the clicked node and compue the new amount of squares that are claimed
-	//Then the player's score is incremented by the change in captured squares
-	var newClaimedCount = 0;
-
-	//Use recursion or a stack to traverse here
-
-
-
-
-	//Update the score
-	var scoreChange = newClaimedCount - totalClaimed;
-	playerScores[currentTurn] += scoreChange;	
-	totalClaimed = newClaimedCount;
-
-	//All squares are claimed
-	if (totalClaimed == boardRows * boardCols) {
-		//Find who has the highest score
-		//Only use board sizes that result in an odd number of squares so ties are not possible
-		//Add tie checking later
-		var winnerID = 0;
-		for (var i = 1; i < playerCount; i++) {
-			if (playerScores[i] > playerScores[winnerID]) {
-				winnerID = i;
+		if (totalClaimed == boardRows * boardCols) {
+			var highestScore = 0;
+			for (var i = 0; i < playerCount; i++) {
+				if (playerScores[i] > highestScore) {
+					highestScore = playerScores[i];
+				}
 			}
+			var winnerIDs = [];
+			for (var i = 0; i < playerCount; i++) {
+				if (playerScores[i] == highestScore) {
+					winnerIDs.push(i);
+				}
+			}
+			onGameEnd(winnerIDs);
+		} else {
+			currentTurn++;
+			if (currentTurn == playerCount)
+				currentTurn = 0;//Wrap back around to the first player
 		}
-		onGameEnd(winnerID);
+
 	}
-
-	//Move on to the next turn
-	if (currentTurn == playerCount)
-		currentTurn = 0;
-	currentTurn++;
-
 }
-
-
 
 //MUSTAFA
 //Called when the game ends
