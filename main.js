@@ -1,7 +1,7 @@
 
 
 //The number of players playing the game
-var playerCount = 10;
+var playerCount = 2;
 
 //Whose turn it is [0, playerCount)
 var currentTurn = 0;
@@ -21,8 +21,8 @@ var boardRows = -1, boardCols = -1;
 //The elements added to the DOM must contain listeners that apply animations 
 //to the lines when hoovered and call onLineClicked with the correct line coordinate when that element is clicked
 function constructBoard(rowCount, colCount) {//boardObj (int int)
-	boardRows = colCount;
-	boardCols = rowCount;
+	boardRows = rowCount;
+	boardCols = colCount;
 
 	const board = document.getElementById('board');
 	board.innerHTML = "";//Delete any old cells
@@ -56,7 +56,11 @@ function getElement(row, col, isVert) {
 }
 
 function isClicked(row, col, isVert) {
-	// returns the boolean "is clicked"
+	if (isVert && col == boardCols && row >= 0 && row < boardRows) return true;
+	if (!isVert && row == boardRows && col >= 0 && col < boardCols) return true;
+
+	if (row < 0 || row >= boardRows || col < 0 || col >= boardCols) return false;
+
 	for (var i = 0; i < 10; i++) {
 		if (getElement(row, col, isVert).classList.contains("clicked" + i))
 			return true;
@@ -65,13 +69,73 @@ function isClicked(row, col, isVert) {
 }
 
 function markAsClicked(row, col, isVert, playerID) {
+	if (row < 0 || row >= boardRows || col < 0 || col >= boardCols) return;
 	return getElement(row, col, isVert).classList.add("clicked" + playerID);
 }
 
+function countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, isVert, row, col, visited, iterCount) {
 
-function countClaimedCells() {
-	var cells = [];
-	return cells
+	if (iterCount > 0 && initalIsVert == isVert && initalRow == row && initalCol == col) {
+		console.log("[" + row + ", " + col + "] " + (isVert ? "v" : "h") + " wins!");
+		return true;//We made it back to the start!
+	
+	} else if (row < 0 || row >= boardRows || col < 0 || col >= boardCols) {
+		//console.log("[" + row + ", " + col + "] " + (isVert ? "v" : "h") + " is off the board because [" + boardRows + ", " + boardCols + "]");
+
+		return false;//This line if off the board
+	
+	} else if (visited[isVert ? 1 : 0][row][col]) {
+		console.log("[" + row + ", " + col + "] " + (isVert ? "v" : "h") + " has been visited already");
+		return false;//We have been here already
+
+	} else if (!isClicked(row, col, isVert == 1)) {
+		console.log("[" + row + ", " + col + "] " + (isVert ? "v" : "h") + " has not been clicked");
+		return false;//This line is not clicked
+	
+	} else {
+		//Regular case. Mark as visited and recurse
+		visited[isVert ? 1 : 0][row][col] = true;
+		iterCount++;
+		console.log("Traversing [" + row + ", " + col + "] " + (isVert ? "v" : "h"));
+		var done = false;
+		if (isVert) {
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, false, row, col - 1, visited, iterCount);
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, true, row - 1, col, visited, iterCount);
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, false, row, col, visited, iterCount);
+			
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, false, row + 1, col - 1, visited, iterCount);
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, true, row + 1, col, visited, iterCount);
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, false, row + 1, col, visited, iterCount);
+
+		} else {
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, true, row, col, visited, iterCount);
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, false, row, col - 1, visited, iterCount);
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, true, row - 1, col, visited, iterCount);
+
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, true, row - 1, col + 1, visited, iterCount);
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, false, row, col + 1, visited, iterCount);
+			done |= countNewlyClaimedCellsHelper(initalIsVert, initalRow, initalCol, true, row, col + 1, visited, iterCount);
+		}
+		if (done) console.log("[" + row + ", " + col + "] " + (isVert ? "v" : "h") + " ON PATH");
+
+		return done;
+	}
+}
+
+//Traverses the graph of connections and finds new perviously unclaimed cells.
+//This function marks them as claimed and returns the number that were claimed
+function countNewlyClaimedCells(row, col, isVert) {
+	var visited = [];//3d array where values are [isVert][row][col]
+	for (var i = 0; i < boardRows; i++) {
+		visited[i] = [];
+		for (var j = 0; j < boardRows; j++) {
+			visited[i][j] = [];
+			for (var k = 0; k < boardCols; k++) {
+				visited[i][j][k] = false;
+			}
+		}
+	}
+	countNewlyClaimedCellsHelper(isVert, row, col, isVert, row, col, visited, 0);
 }
 
 function isFilled(cell) {
@@ -82,11 +146,6 @@ function isFilled(cell) {
 	return false;
 }
 
-function markAsClaimed(cell) {
-	if (!isFilled(cell)) {
-		cell.classList.add("filled" + playerID)
-	}
-}
 
 //PARI
 //Writes the new segment to the board object and checks for new points / the end of the game
@@ -94,10 +153,10 @@ function onLineClicked(row, col, isVert) {// (int int boolean)
 	if (!isClicked(row, col, isVert)) {
 		console.log("" + row + "," + col + "(" + (isVert ? "v" : "h") + ") was clicked");
 		markAsClicked(row, col, isVert, currentTurn);
-		const newClaimedCount = countClaimedCells();
-		var scoreChange = newClaimedCount - totalClaimed;
-		playerScores[currentTurn] += scoreChange;	
-		totalClaimed = newClaimedCount;
+
+		const cellsAdded = countNewlyClaimedCells(row, col, isVert);
+		playerScores[currentTurn] += cellsAdded;
+		totalClaimed += cellsAdded;
 
 		if (totalClaimed == boardRows * boardCols) {
 			var highestScore = 0;
@@ -125,7 +184,7 @@ function onLineClicked(row, col, isVert) {// (int int boolean)
 //MUSTAFA
 //Called when the game ends
 //Displays who won and the scores for each size
-function onGameEnd(winnerID) {// (string)
+function onGameEnd(winnerIDs) {// (list<string>)
 
 
 
@@ -140,9 +199,9 @@ function getText(prompt) {//string (string)
 }
 
 
+//This runs when the DOM is loaded
 window.onload = () => {
-	// this runs when the DOM is loaded
-	const board = constructBoard(10, 5);
+	const board = constructBoard(5, 10);
 
 
 	//Rules stuff
@@ -166,7 +225,7 @@ window.onload = () => {
 	rulesButton.onclick = function() {
 		rulesModal.style.display = "block";
 	}
-	rulesModal.style.display = "block";
+	//rulesModal.style.display = "block";
 
 	rulesSpan.onclick = function() {
 		rulesModal.style.display = "none";
