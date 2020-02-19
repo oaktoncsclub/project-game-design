@@ -50,6 +50,8 @@
 	text-decoration: none;
 	cursor: pointer;
 }
+
+
 .rules-modal-class{
 	display: none;
 	position: fixed;
@@ -64,6 +66,8 @@
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
+
+
 .rules-modal-content{
 	font-family: "Verdana";
 	background-color: #000;
@@ -74,6 +78,8 @@
 	width: 80%;
 }
 
+
+
 .close-rules-modal{
 	color: white;
 	float: right;
@@ -82,6 +88,7 @@
 }
 
 .close-rules-modal:hover, 
+
 .close-rules-modal:focus {
 	color: #888;
 	text-decoration: none;

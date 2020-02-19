@@ -164,8 +164,11 @@ function getText(prompt) {//string (string)
 
 window.onload = () => {
 
+	onGameEnd("Brian");
+
 	// this runs when the DOM is loaded
 	const board = constructBoard(10, 5);
+
 
 	//Rules stuff
 	
